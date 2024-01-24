@@ -5,7 +5,7 @@ import { useSelector, useDispatch } from "react-redux"
 
 const useAuth = () => {
 
-  const apiBaseURL = "http://192.168.223.43/kaadiapi";
+  const apiBaseURL = "http://192.168.232.43/kaadiapi";
 
   let {
     user,
