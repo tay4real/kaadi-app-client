@@ -11,17 +11,36 @@
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
+    "plugins": [
+      [
+        "react-native-vision-camera",
+        {
+          "cameraPermissionText": "Kaadi App needs access to your Camera.",
+          "enableMicrophonePermission": true,
+          "microphonePermissionText": "Kaadi App needs access to your Microphone."
+        }
+      ]
+    ],
     "assetBundlePatterns": [
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "infoPlist": {
+        "NSCameraUsageDescription": "Kaadi App needs access to your Camera.",
+        "NSMicrophoneUsageDescription": "Kaadi App needs access to your Microphone."
+      }
     },
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
         "backgroundColor": "#ffffff"
-      }
+      },
+      "permissions": [
+        "android.permission.CAMERA",
+        "android.permission.RECORD_AUDIO"
+      ],
+      "package": "com.aotubusin.kaadiappclient"
     },
     "web": {
       "favicon": "./assets/favicon.png"

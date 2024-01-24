@@ -1,20 +1,36 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import "react-native-gesture-handler";
+import Navigation from "./Navigation";
+import { Provider } from "react-redux";
+import configureStore from "./store";
+import {LogBox} from 'react-native'
+import React from 'react';
+import { ApplicationProvider } from '@ui-kitten/components';
+import * as eva from '@eva-design/eva';
+import { default as theme } from './theme.json'; // <-- Import app theme
+import { default as mapping } from './mapping.json'; // <-- Import app mapping
+
+
+
+const store = configureStore();
 
 export default function App() {
+  LogBox.ignoreAllLogs();
+ 
+  
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+   
+   <>
+
+   <ApplicationProvider  {...eva}
+    theme={{ ...eva.light, ...theme }}
+    customMapping={mapping}>
+      <Provider store={store}>
+        <Navigation/>
+      </Provider>
+    </ApplicationProvider>
+   </>
+    
   );
 }
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+
