@@ -8,7 +8,8 @@
 
 
 ## Mini Demo:
-![doctors]()
+![Onboading screen](./assets/onboading.jpeg)
+![login screen](./assets/login.jpeg)
 
 
 
