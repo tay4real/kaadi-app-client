@@ -19,6 +19,7 @@ const Settings = ({navigation}) => {
   const [pending, setPending] = useState(false);
   const [username, setUsername] = useState("");
   const [orin, setOrin] = useState("");
+  const [id, setID] = useState("");
   const [oldpassword, setOldPassword] = useState("");
   const [newpassword, setNewPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
@@ -48,6 +49,7 @@ const Settings = ({navigation}) => {
     if(user){
       setUsername(user.username);
       setOrin(user.orin);
+      setID(user.id)
     }
   }, [user])
 
@@ -111,7 +113,6 @@ const Settings = ({navigation}) => {
         getUser();
 
       }else if(res.data.error){
-        console.log(orin, username)
         setPending(false)
         setErrorMsg(res.data.error)
       }
@@ -125,8 +126,6 @@ const Settings = ({navigation}) => {
 
   const updatePassword = async() => {
    
-   
-
     if(confirmPassword !== newpassword){
       setPassErr("Confirm Password does not match");
     }else{
@@ -144,7 +143,7 @@ const Settings = ({navigation}) => {
           setPending(true);
           toggleUpdatePassword();
         
-          const res = await axios.post(`${apiBaseURL}/kaadi_client/update_password.php`,  Data);
+          const res = await axios.post(`${apiBaseURL}/api/controllers/users.php`,  Data);
           
           setOldPassword("");
           setConfirmPassword("");

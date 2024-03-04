@@ -12,7 +12,7 @@ import axios from "axios";
 import {LogBox} from 'react-native'
 
 
-const CaptureUser = ({navigation, route}) => {
+const CaptureUserAdmin = ({navigation, route}) => {
   LogBox.ignoreAllLogs()
   
   const { apiBaseURL } = useAuth();
@@ -88,18 +88,18 @@ const CaptureUser = ({navigation, route}) => {
       formData.append("update-picture", true )
 
       try {
-         console.log(formData)
-         //const res = await axios.post(`${apiBaseURL}/api/controllers/kaadi.php`,  formData);
-        const res = await fetch(`${apiBaseURL}/api/controllers/kaadi.php`, {
+        // const res = await axios.post(`${apiBaseURL}/kaadi/uploadPicture.php`, formData);
+
+        const res = await fetch(`${apiBaseURL}/api/controllers/kaadi_admin.php`, {
           method: 'POST',
           body: formData
         })
         
-       console.log(res)
+       
         
         if (res.ok) {                      
           setPickedImagePath("");
-          navigation.navigate("Successful");                                                                                                                               
+          navigation.navigate("SuccessfulAdmin");                                                                                                                               
         }else{
           alert("Something went wrong! Try again");
           console.log(response.data.error);
@@ -107,7 +107,7 @@ const CaptureUser = ({navigation, route}) => {
         }
       } catch (error) {
         
-        console.log("Error Found: ",error.message);
+        console.log(error.message);
       }
     }else{
       alert("Something went wrong! Try again");
@@ -120,7 +120,7 @@ const CaptureUser = ({navigation, route}) => {
     <StatusBar backgroundColor={COLORS.primary} />
     <SafeAreaView style={styles.container}>
         <View style={styles.header}>
-            <TouchableOpacity onPress={() => navigation.navigate("OtherInfo")}>
+            <TouchableOpacity onPress={() => navigation.navigate("OtherInfoAdmin")}>
                 <Ionicons name='arrow-back-outline' size={24}/>
             </TouchableOpacity>
             <Text style={styles.titleText}>Image Capture</Text>
@@ -188,4 +188,4 @@ const CaptureUser = ({navigation, route}) => {
   )
 }
 
-export default CaptureUser
+export default CaptureUserAdmin

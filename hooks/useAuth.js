@@ -1,11 +1,13 @@
-import { useEffect } from "react"
+import { useEffect, useState } from "react"
 import axios from "axios"
 import AsyncStorage from "@react-native-async-storage/async-storage"
 import { useSelector, useDispatch } from "react-redux"
+//import {API_BASE_URL} from '@env'
 
 const useAuth = () => {
 
-  const apiBaseURL = "http://192.168.232.43/kaadiapi";
+  //const apiBaseURL = "http://192.168.153.43/kaadiapi";
+  const apiBaseURL = "https://sitaapps.ng";
 
   let {
     user,
@@ -14,6 +16,8 @@ const useAuth = () => {
   } = useSelector((state) => state.authReducer);
 
   const dispatch = useDispatch();
+
+
 
   useEffect(() => {
     loadStorageData();
@@ -38,19 +42,24 @@ const useAuth = () => {
   const signIn = async (username, password) => {
     try {
       dispatch({ type: "LOAD_USER_START" });
-      const res = await axios.post(`${apiBaseURL}/auth/login.php`, {
+      const res = await axios.post(`${apiBaseURL}/api/controllers/users.php`, {
         username: username.trim(),
-        password: password.trim()
+        password: password.trim(),
+        "user-login" : true
       });
       
 
       if(res.data){
         if(res.data.error){
+          
+         
           dispatch({
             type: "LOAD_USER_FAILURE",
             payload: res.data.error,
           });
+
         }else{
+          console.log(res.data)
           
           AsyncStorage.setItem("@user", JSON.stringify(res.data));
           dispatch({ type: "LOAD_USER_SUCCESS", payload: res.data });
@@ -58,7 +67,7 @@ const useAuth = () => {
         
       }
     } catch (error) {
-      
+     
       dispatch({
         type: "LOAD_USER_FAILURE",
         payload: error.response.data.message,

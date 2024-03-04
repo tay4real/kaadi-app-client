@@ -12,7 +12,7 @@ import {
   StyleSheet
 } from "react-native";
 import Input from '../../components/input/Input';
-import { useForm } from "react-hook-form";
+import { useForm, UseFormReset } from "react-hook-form";
 import Button from '../../components/button/Button';
 import { COLORS } from '../../constants';
 import img from "../../assets/welcome.jpg"
@@ -30,9 +30,13 @@ const Signin = ({navigation, route}) => {
     control,
     handleSubmit,
     formState: { errors },
+    reset
   } = useForm();
 
-  console.log(user);
+ 
+
+
+
 
   const [hidePassword, setHidePassword] = useState(true);
 
@@ -41,8 +45,11 @@ const Signin = ({navigation, route}) => {
   };
 
   const onSignInPressed = async (data) => {
-    await signIn(data.username, data.password);
-    
+   await signIn(data.username, data.password);
+
+  //  Reset Form
+  reset();
+
   };
 
   const onForgotPasswordPressed = () => {

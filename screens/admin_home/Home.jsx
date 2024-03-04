@@ -35,14 +35,14 @@ const Home = ({navigation}) => {
         <View style={{marginTop: 50}}>
           <View style={styles.menuContainer}>
               
-              <TouchableOpacity onPress={() => navigation.navigate("RegisterKaadi")} style={styles.menu}>
+              <TouchableOpacity onPress={() => navigation.navigate("RegisterKaadiAdmin")} style={styles.menu}>
                 <View style={{flexDirection: "row", alignItems: "center"}}>
                    
                     <Text style={styles.menuText}>Register Kaadi User</Text>
                   </View>
                   <Ionicons name='person' size={30} style={{marginRight: 10, color:"red"}}/>
               </TouchableOpacity>
-              <TouchableOpacity onPress={() => navigation.navigate("SearchKaadi")} style={styles.menu}>
+              <TouchableOpacity onPress={() => navigation.navigate("SearchKaadiAdmin")} style={styles.menu}>
                   <View style={{flexDirection: "row", alignItems: "center"}}>
                     
                     <Text style={styles.menuText}>Search Registered Users</Text>

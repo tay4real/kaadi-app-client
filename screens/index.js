@@ -21,6 +21,12 @@ import Tax from "./tax/Tax";
 import AgricInputs from "./benefits/AgricInputs";
 import OndoScholarship from "./benefits/OndoScholarship";
 import SMEsGrants from "./benefits/SMEsGrants";
+import RegisterKaadiAdmin from "./registration_admin/RegisterKaadiAdmin";
+import OtherInfoAdmin from "./registration_admin/OtherInfoAdmin";
+import CaptureUserAdmin from "./registration_admin/CaptureUserAdmin";
+import SuccessfulAdmin from "./registration_admin/SuccessfulAdmin";
+import NOKInfoAdmin from "./registration_admin/NOKInfoAdmin";
+import KaadiUser from "./kaadi/KaadiUser";
 
 
 
@@ -34,7 +40,11 @@ import SMEsGrants from "./benefits/SMEsGrants";
 
 
 
-export{
+
+
+
+
+export default {
   ClientHome,
   AdminHome,
   Welcome,
@@ -58,6 +68,10 @@ export{
   AgricInputs,
   OndoScholarship,
   SMEsGrants,
-
-
+  RegisterKaadiAdmin,
+  OtherInfoAdmin,
+  CaptureUserAdmin,
+  SuccessfulAdmin,
+  NOKInfoAdmin,
+  KaadiUser
 }

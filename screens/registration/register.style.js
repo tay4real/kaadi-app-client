@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
   },
   formContainer:{
     backgroundColor: COLORS.offwhite,
-    borderRadius: 20
+    borderRadius: 20,
+    marginBottom: 100
   },
   formTitleContainer:{
     flexDirection: 'row', 

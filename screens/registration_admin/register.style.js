@@ -12,7 +12,7 @@ const styles = StyleSheet.create({
     width: "100%",
     justifyContent: "space-between",
     alignItems: 'center',
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
   },
   titleText:{
     fontSize: SIZES.large,
@@ -20,7 +20,8 @@ const styles = StyleSheet.create({
   },
   formContainer:{
     backgroundColor: COLORS.offwhite,
-    borderRadius: 20
+    borderRadius: 20,
+    marginBottom: 100
   },
   formTitleContainer:{
     flexDirection: 'row', 
@@ -70,7 +71,7 @@ const styles = StyleSheet.create({
     paddingHorizontal: 20,
   },
   submitBtn:{
-    backgroundColor: COLORS.primary,
+    backgroundColor: "#3b5998",
     height: 50,
     borderRadius: 10,
     alignItems: 'center',
@@ -79,19 +80,44 @@ const styles = StyleSheet.create({
   submitBtnText:{
     fontSize: 15
   },
-  imageContainer:{
-    marginVertical: 20,
-    marginHorizontal: 20,
-    justifyContent: 'center',
-    alignItems:'center',
-    height: 400,
-    borderRadius: 20
+  button:{
+    height: 50,
+    justifyContent: "center",
+    alignItems: "center",
+    borderRadius: 50,
+    marginTop: 10,
+    marginBottom: 15,
+    backgroundColor: "#075985"
   },
-  image:{
-    width: "80%",
-    height: 350,
-    aspectRatio: 1,
-    resizeMode: 'cover'
+  buttonText: {
+    fontSize: 14,
+    fontWeight: "500",
+    color: "#fff"
+  },
+  datePicker: {
+    height: 120,
+    marginTop: -10
+  },
+  pickerButton:{
+    paddingHorizontal: 20
+  },
+  inputText: {
+    height: 60,
+    borderRadius: 10,
+    fontSize: 15,
+    fontWeight: "400",
+    color: "black",
+    lineHeight: 15,
+    letterSpacing: -0.02,
+    flex: 1,
+  },
+  inputTextContainer: {
+    backgroundColor: "#E0E0E0",
+    flex: 1,
+    borderRadius: 3,
+    paddingHorizontal: 10,
+    marginVertical: 5,
+    height: 45,
   }
 })
 

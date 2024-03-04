@@ -90,7 +90,9 @@ const RegisterKaadi = () => {
   const getOccupationCatergories = async() => {
     try {
       
-      const res = await axios.get(`${apiBaseURL}/common/occupation_categories.php`);
+      const res = await axios.post(`${apiBaseURL}/api/controllers/general.php`, {
+        "all-occupations": true
+      });
 
       if (res.data) {
         setPending(false);
@@ -110,22 +112,33 @@ const RegisterKaadi = () => {
       }else{
         setShowDOBError(false);
 
+
+         // Sanitize data
+         let fullname = data.surname.trim().toUpperCase() + " " + data.firstname.trim().toUpperCase() + " ";
+         let othername = "";
+        
+         if(data.othername !== ""){
+           fullname += data.othername.trim().toUpperCase();
+           othername = data.othername.trim().toUpperCase();
+         }
+
         let Data = {
           nin : data.nin.trim(),
-          sur_name: data.surname.trim(),
-          first_name: data.firstname.trim(),
-          other_name: data.othername.trim(),
-          full_name: data.surname.trim().toUpperCase() + " " + data.firstname.trim().toUpperCase() + " " + data.othername.trim().toUpperCase(),
+          sur_name: data.surname,
+          first_name: data.firstname.trim().toUpperCase(),
+          other_name: data.othername.trim().toUpperCase(),
+          full_name: fullname.trim(),
           phone_number1: data.phone.trim(),
           gender: gender,
           occupation_id: occupation,
-          date_birth: dateOfBirth
+          date_birth: dateOfBirth,
+          "register-kaadi": true
         }
   
   
         try {
           setPending(true)
-          const res = await axios.post(`${apiBaseURL}/kaadi_client/register_kaadi.php`,  Data);
+          const res = await axios.post(`${apiBaseURL}/api/controllers/kaadi.php`,  Data);
           if (res.data) {
             setPending(false);
             console.log(res.data.id)
@@ -155,161 +168,181 @@ const RegisterKaadi = () => {
  
   return (
     <>
-     <StatusBar backgroundColor={COLORS.primary} />
-    <SafeAreaView style={styles.container}>
-    <ScrollView
-          showsVerticalScrollIndicator={false}
-          showsHorizontalScrollIndicator={false}
-        >
-        <View style={styles.header}>
-            {
-             user && user.role === "Admin" ? 
-              <TouchableOpacity onPress={() => navigation.navigate("Home")}>
-                <Ionicons name='arrow-back-outline' size={24}/>
-              </TouchableOpacity> : 
-              <TouchableOpacity onPress={() => navigation.navigate("Welcome")}>
-                <Ionicons name='arrow-back-outline' size={24}/>
-              </TouchableOpacity>
-            }
-            <Text style={styles.titleText}>Kaadi Registration</Text>
-        </View>
-        <View style={styles.formContainer}>
-            <View style={styles.formTitleContainer}>
-                <Text style={styles.formTitle}>Basic Info</Text>
-            </View>
+    <StatusBar backgroundColor={COLORS.primary} />
+   <SafeAreaView style={styles.container}>
+      <View style={styles.header}>
+           {
+            user && user.role === "Admin" ? 
+             <TouchableOpacity onPress={() => navigation.navigate("Home")}>
+               <Ionicons name='arrow-back-outline' size={24}/>
+             </TouchableOpacity> : 
+             <TouchableOpacity onPress={() => navigation.navigate("Welcome")}>
+               <Ionicons name='arrow-back-outline' size={24}/>
+             </TouchableOpacity>
+           }
+           <Text style={styles.titleText}>Kaadi Registration</Text>
+       </View>
+   <ScrollView
+         showsVerticalScrollIndicator={false}
+         showsHorizontalScrollIndicator={false}
+       >
+       
+       <View style={styles.formContainer}>
+           <View style={styles.formTitleContainer}>
+               <Text style={styles.formTitle}>Basic Info</Text>
+           </View>
 
-            {error !== "" && (
-            <View>
-              <Text style={{ padding: 5, color: "red", textAlign: "center" }}>
-                {error}
-              </Text>
-            </View>
-          )}
-            <View style={styles.formInputContainer}>
-              <Input
-                name="nin"
-                placeholder="NIN"
-                control={control}
-                rules={{ required: "NIN is required" }}
-              />
-            </View>
-            <View style={styles.formInputContainer}>
-                <Input
-                name="surname"
-                placeholder="Surname"
-                control={control}
-                rules={{ required: "Surname is required" }}
-              />
-            </View>
-            <View style={styles.formInputContainer}>
-                <Input
-                  name="firstname"
-                  placeholder="First Name"
-                  control={control}
-                  rules={{ required: "First name is required" }}
-                />
-            </View>
-            <View style={styles.formInputContainer}>
-                <Input
-                  name="othername"
-                  placeholder="Othername"
-                  control={control}
-                  rules={{ required: false}}
-                />
-            </View>
-            <View style={styles.formInputContainer}>
-                {showPicker && <DateTimePicker 
-                  mode="date"
-                  display='spinner'
-                  value={date}
-                  onChange={onChange}
-                  style={{height: 120, marginTop: -10 }}
-                />}
+           {error !== "" && (
+           <View>
+             <Text style={{ padding: 5, color: "red", textAlign: "center" }}>
+               {error}
+             </Text>
+           </View>
+         )}
+           <View style={styles.formInputContainer}>
+             <Text>NIN</Text>
+             <Input
+               name="nin"
+               placeholder="NIN"
+               control={control}
+               rules={{ required: "NIN is required" }}
+             />
+           </View>
+           <View style={styles.formInputContainer}>
+           <Text>Surname</Text>
+               <Input
+               name="surname"
+               placeholder="Surname"
+               control={control}
+               rules={{ required: "Surname is required" }}
+             />
+           </View>
+           <View style={styles.formInputContainer}>
+           <Text>First Name</Text>
+               <Input
+                 name="firstname"
+                 placeholder="First Name"
+                 control={control}
+                 rules={{ required: "First name is required" }}
+               />
+           </View>
+           <View style={styles.formInputContainer}>
+           <Text>Othername</Text>
+               <Input
+                 name="othername"
+                 placeholder="Othername"
+                 control={control}
+                 rules={{ required: false}}
+               />
+           </View>
+           <View style={styles.formInputContainer}>
+           <Text>Date of Birth</Text>
+               {showPicker && <DateTimePicker 
+                 mode="date"
+                 display='spinner'
+                 value={date}
+                 onChange={onChange}
+                 style={{height: 120, marginTop: -10 }}
+               />}
 
-                {
-                  showPicker && Platform.OS === "ios" && (
-                    <View style={{flexDirection: "row", justifyContent: "space-around"}}>
-                        <TouchableOpacity style={[
-                          styles.button,
-                          styles.pickerButton,
-                          {backgroundColor: "#11182711"}
-                        ]}
-                        onPress={toggleDatePicker}
-                        >
-                          <Text style={[styles.buttonText, {color: "#075985"}]}>Cancel</Text>
-                        </TouchableOpacity>
+               {
+                 showPicker && Platform.OS === "ios" && (
+                   <View style={{flexDirection: "row", justifyContent: "space-around"}}>
+                       <TouchableOpacity style={[
+                         styles.button,
+                         styles.pickerButton,
+                         {backgroundColor: "#11182711"}
+                       ]}
+                       onPress={toggleDatePicker}
+                       >
+                         <Text style={[styles.buttonText, {color: "#075985"}]}>Cancel</Text>
+                       </TouchableOpacity>
 
-                        <TouchableOpacity style={[
-                          styles.button,
-                          styles.pickerButton,
-                         
-                        ]}
-                        onPress={confirmIOSDate}
-                        >
-                          <Text style={[styles.buttonText]}>Confirm</Text>
-                        </TouchableOpacity>
-                    </View>
-                  )
-                }
-                {!showPicker && <Pressable onPress={toggleDatePicker}>
-                  <View style={styles.inputTextContainer}>
-                    <TextInput 
-                      style={styles.inputText}
-                      placeholder='Date of Birth'
-                      value={dateOfBirth}
-                      onChangeText={setDateOfBirth}
-                      editable={false}
-                      onPressIn={toggleDatePicker}
-                    />
+                       <TouchableOpacity style={[
+                         styles.button,
+                         styles.pickerButton,
+                        
+                       ]}
+                       onPress={confirmIOSDate}
+                       >
+                         <Text style={[styles.buttonText]}>Confirm</Text>
+                       </TouchableOpacity>
+                   </View>
+                 )
+               }
+               {!showPicker && <Pressable onPress={toggleDatePicker}>
+                 <View style={styles.inputTextContainer}>
+                   <TextInput 
+                     style={styles.inputText}
+                     placeholder='Date of Birth'
+                     value={dateOfBirth}
+                     onChangeText={setDateOfBirth}
+                     editable={false}
+                     onPressIn={toggleDatePicker}
+                   />
 
-                  </View>
-                  {showDOBError && <View>
-                    <Text style={{color: "red"}}>Date of Birth is required</Text>
-                  </View>}
-                  
-                </Pressable>}
-                
-            </View>
+                 </View>
+                 {showDOBError && <View>
+                   <Text style={{color: "red"}}>Date of Birth is required</Text>
+                 </View>}
+                 
+               </Pressable>}
+               
+           </View>
 
-            
-            <View style={styles.formInputContainer}>
-              <SelectList 
-                  setSelected={(val) => setOccupation(val)} 
-                  data={occupations} 
-                  save="key"
-                  placeholder='Select Occupation'
-              />
-            </View>
-            <View style={styles.formInputContainer}>
-                <Input
-                  name="phone"
-                  placeholder="Phone"
-                  control={control}
-                  rules={{ required: "Phone is required" }}
-                />
-            </View>
-            <View style={styles.formInputContainer}>
-              <SelectList 
-                  search = {false}
-                  setSelected={(val) => setGender(val)} 
-                  data={Genderdata} 
-                  save="key"
-                  placeholder='Select Gender'
-              />
-            </View>
+           
+           <View style={styles.formInputContainer}>
+           <Text>Occupation</Text>
+             <SelectList 
+                 setSelected={(val) => setOccupation(val)} 
+                 data={occupations} 
+                 save="key"
+                 placeholder='Select Occupation'
+                 boxStyles={[styles.inputTextContainer, {borderWidth: 0}]}
+                 inputStyles={{}}
+                 dropdownStyles={[ {borderWidth: 0, backgroundColor:"#E0E0E0"}]}
+                 dropdownItemStyles={{}}
+                 dropdownTextStyles={{}}
+             />
+           </View>
+           <View style={styles.formInputContainer}>
+           <Text>Phone</Text>
+               <Input
+                 name="phone"
+                 placeholder="Phone"
+                 control={control}
+                 rules={{ required: "Phone is required" }}
+               />
+           </View>
+           <View style={styles.formInputContainer}>
+           <Text>Gender</Text>
+             <SelectList 
+                 search = {false}
+                 setSelected={(val) => setGender(val)} 
+                 data={Genderdata} 
+                 save="key"
+                 placeholder='Select Gender'
+                 boxStyles={[styles.inputTextContainer, {borderWidth: 0}]}
+                 inputStyles={{}}
+                 dropdownStyles={[ {borderWidth: 0, backgroundColor:"#E0E0E0"}]}
+                 dropdownItemStyles={{}}
+                 dropdownTextStyles={{}}
 
-            <View style={styles.formSubmitContainer}>
-              <Button
-                text="Save and Continue"
-                bgColor= {COLORS.primary}
-                onPress={handleSubmit(insertRecord)}
-                pending={pending}
-              />
-            </View>
-        </View>
-        </ScrollView>
-    </SafeAreaView>
-    </>
+             />
+           </View>
+
+           <View style={styles.formSubmitContainer}>
+             <Button
+               text="Save and Continue"
+               bgColor= {COLORS.primary}
+               onPress={handleSubmit(insertRecord)}
+               pending={pending}
+             />
+           </View>
+       </View>
+       </ScrollView>
+   </SafeAreaView>
+   </>
   )
 }
 

@@ -2,15 +2,28 @@ import { StyleSheet } from "react-native";
 import { COLORS, SIZES } from "../../constants";
 
 const styles = StyleSheet.create({
+  
+  back:{
+    width: 30, 
+    height: 30, 
+    borderRadius: 30, 
+    backgroundColor: "white", 
+    alignItems: "center", 
+    justifyContent: "center"
+  },
   header:{
-    flexDirection: 'row',
-    backgroundColor: COLORS.primary,
     height: 50,
     width: "100%",
+    flexDirection: "row",
+    alignItems: "center",
     justifyContent: "space-between",
-    alignItems: 'center',
-    paddingHorizontal: 20
+    paddingHorizontal: 20,
+    backgroundColor: COLORS.primary
   },
+  headerTitle:{
+    fontSize: SIZES.large,
+  },
+  
   titleText:{
     fontSize: SIZES.xLarge,
     fontWeight: "600",

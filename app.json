@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "kaadi-app-client",
-    "slug": "kaadi-app-client",
+    "name": "Kaadi App",
+    "slug": "kaadi-app",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/icon.png",
@@ -34,7 +34,7 @@
     "android": {
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+        "backgroundColor": "#F69C75"
       },
       "permissions": [
         "android.permission.CAMERA",
@@ -44,6 +44,11 @@
     },
     "web": {
       "favicon": "./assets/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "5c32bf57-7e06-4171-af9f-79dba16482f0"
+      }
     }
   }
 }

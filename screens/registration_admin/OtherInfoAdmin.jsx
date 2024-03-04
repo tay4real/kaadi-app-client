@@ -14,7 +14,7 @@ import {LogBox} from 'react-native'
 
 
 
-const OtherInfo = ({navigation, route}) => {
+const OtherInfoAdmin = ({navigation, route}) => {
   const { apiBaseURL } = useAuth();
   const [id, setID] = useState( "");
   const {
@@ -52,7 +52,7 @@ const OtherInfo = ({navigation, route}) => {
 
 
   useEffect(()=>{
-    if(route.params.id){
+    if(route.params){
       setID(route.params.id)
     }
   },[])
@@ -149,10 +149,11 @@ const OtherInfo = ({navigation, route}) => {
     }
   }
 
+
+
   const updateRecord = async(data) => {
     
      LogBox.ignoreAllLogs();
-
       let Data = {
         country_birth: "Nigeria",
         state_birth : birthState,
@@ -172,23 +173,27 @@ const OtherInfo = ({navigation, route}) => {
 
       try {
         setPending(true);
+      
+        const res = await axios.post(`${apiBaseURL}/api/controllers/kaadi_admin.php`,  Data);
+
+     
        
-        const res = await axios.post(`${apiBaseURL}/api/controllers/kaadi.php`,  Data);
-   
         if (res.data.success) {
-          
+        
           setPending(false);
-          navigation.navigate("CaptureUser", {
+          navigation.navigate("CaptureUserAdmin", {
             id: id
           });
 
         }else if(res.data.error){
+          
           setPending(false)
           setError(res.data.error)
           setSuccess("");
         }
       } catch (error) {
-       setPending(false)
+        
+        setPending(false)
         console.log(error.response.data);
         setError(error.response.data);
       }
@@ -208,7 +213,7 @@ const OtherInfo = ({navigation, route}) => {
           showsHorizontalScrollIndicator={false}
         >
         <View style={styles.header}>
-            <TouchableOpacity onPress={() => navigation.navigate("RegisterKaadi")}>
+            <TouchableOpacity onPress={() => navigation.navigate("RegisterKaadiAdmin")}>
                 <Ionicons name='arrow-back-outline' size={24}/>
             </TouchableOpacity>
             <Text style={styles.titleText}>Kaadi Registration</Text>
@@ -234,6 +239,11 @@ const OtherInfo = ({navigation, route}) => {
                   data={allBirthStates} 
                   save="key"
                   placeholder='Select State'
+                  boxStyles={[styles.inputTextContainer, {borderWidth: 0}]}
+                  inputStyles={{}}
+                  dropdownStyles={[ {borderWidth: 0, backgroundColor:"#E0E0E0"}]}
+                  dropdownItemStyles={{}}
+                  dropdownTextStyles={{}}
               />
             </View>
 
@@ -243,6 +253,11 @@ const OtherInfo = ({navigation, route}) => {
                   data={allBirthLgas} 
                   save="value"
                   placeholder='Select LGA'
+                  boxStyles={[styles.inputTextContainer, {borderWidth: 0}]}
+                  inputStyles={{}}
+                  dropdownStyles={[ {borderWidth: 0, backgroundColor:"#E0E0E0"}]}
+                  dropdownItemStyles={{}}
+                  dropdownTextStyles={{}}
               />
             </View>
 
@@ -258,11 +273,15 @@ const OtherInfo = ({navigation, route}) => {
             <View style={styles.formInputContainer}><Text style={{fontSize: 16, fontWeight:"bold", marginRight: 10}}>Place of Origin</Text></View>
             <View style={styles.formInputContainer}>
               <SelectList 
-                
                   setSelected={(val) => setOriginState(val)} 
                   data={allOriginStates} 
                   save="key"
                   placeholder='Select State'
+                  boxStyles={[styles.inputTextContainer, {borderWidth: 0}]}
+                  inputStyles={{}}
+                  dropdownStyles={[ {borderWidth: 0, backgroundColor:"#E0E0E0"}]}
+                  dropdownItemStyles={{}}
+                  dropdownTextStyles={{}}
               />
             </View>
 
@@ -272,6 +291,11 @@ const OtherInfo = ({navigation, route}) => {
                   data={allOriginLgas} 
                   save="value"
                   placeholder='Select LGA'
+                  boxStyles={[styles.inputTextContainer, {borderWidth: 0}]}
+                  inputStyles={{}}
+                  dropdownStyles={[ {borderWidth: 0, backgroundColor:"#E0E0E0"}]}
+                  dropdownItemStyles={{}}
+                  dropdownTextStyles={{}}
               />
             </View>
             
@@ -309,6 +333,11 @@ const OtherInfo = ({navigation, route}) => {
                   data={allResisdentialLgas} 
                   save="value"
                   placeholder='Select LGA'
+                  boxStyles={[styles.inputTextContainer, {borderWidth: 0}]}
+                  inputStyles={{}}
+                  dropdownStyles={[ {borderWidth: 0, backgroundColor:"#E0E0E0"}]}
+                  dropdownItemStyles={{}}
+                  dropdownTextStyles={{}}
               />
             </View>
 
@@ -327,4 +356,4 @@ const OtherInfo = ({navigation, route}) => {
   )
 }
 
-export default OtherInfo
+export default OtherInfoAdmin
